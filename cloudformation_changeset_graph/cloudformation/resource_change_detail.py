@@ -3,7 +3,7 @@ from enum import Enum
 
 from graphviz.dot import Dot
 
-from cloudformation import Template, Parameter
+from cloudformation import Template
 from cloudformation.resource_target_definition import ResourceTargetDefinition
 
 
@@ -33,15 +33,9 @@ class ResourceChangeDetail(object):
             return
 
         if is_template_modification(self.change_source, self.evaluation):
-            cause = Template(self.resource_id)
-        elif self.change_source == ChangeSource.PARAMETER_REFERENCE:
-            cause = Parameter(self.causing_entity)
-        else:
-            cause = None
-
-        if cause:
-            cause.render(dot)
-            causing_entity = cause.node_id
+            template_cause = Template(self.resource_id)
+            template_cause.render(dot)
+            causing_entity = template_cause.node_id
         else:
             causing_entity = self.causing_entity
 

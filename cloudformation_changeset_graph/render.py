@@ -3,18 +3,17 @@ import typing
 
 from graphviz import Digraph
 
-from cloudformation.change import Change
+from cloudformation.describe_change_set_response import DescribeChangeSetResponse
 
-def get_example_changes(example: str) -> typing.Sequence[Change]:
+def get_example_change_set(example: str) -> DescribeChangeSetResponse:
     with open(f'examples/{example}.json', 'r') as fh:
-        return [Change(x) for x in json.load(fh)['Changes']]
+        return DescribeChangeSetResponse(json.load(fh))
 
 
 def render_example(example: str) -> None:
     dot = Digraph(f"Change Set {example}", strict=True)
-    # changes = get_changes(stack_name, change_set_name)
-    changes = get_example_changes(example)
-    for change in changes:
-        change.render(dot)
+    change_set = get_example_change_set(example)
+    change_set.render(dot)
+
     print(dot.source)
     dot.render(f'test-output/{example}', view=True, format='png')
