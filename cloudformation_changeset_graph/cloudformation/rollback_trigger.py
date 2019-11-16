@@ -8,5 +8,5 @@ class RollbackTrigger(object):
     """
 
     def __init__(self, o: typing.Mapping):
-        self.arn = o['Arn']  # type: str
-        self.type = o['Type']  # type: str
+        self.arn = o["Arn"]  # type: str
+        self.type = o["Type"]  # type: str

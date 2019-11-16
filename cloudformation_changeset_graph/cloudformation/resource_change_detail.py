@@ -16,11 +16,11 @@ class ResourceChangeDetail(object):
     def __init__(self, o: typing.Mapping, resource_id):
         # Strings and Enums
         # If the ChangeSource value is DirectModification, no value is given for CausingEntity.
-        self.causing_entity = o.get('CausingEntity')  # type: typing.Optional[str]
-        self.change_source = ChangeSource(o['ChangeSource'])
-        self.evaluation = Evaluation(o['Evaluation'])
+        self.causing_entity = o.get("CausingEntity")  # type: typing.Optional[str]
+        self.change_source = ChangeSource(o["ChangeSource"])
+        self.evaluation = Evaluation(o["Evaluation"])
         # Objects
-        self.target = ResourceTargetDefinition(o['Target'], resource_id)
+        self.target = ResourceTargetDefinition(o["Target"], resource_id)
 
         self.resource_id = resource_id
 
@@ -44,27 +44,37 @@ class ResourceChangeDetail(object):
 
 class ChangeSource(Enum):
     # Ref intrinsic functions that refer to resources in the template
-    RESOURCE_REFERENCE = 'ResourceReference'
+    RESOURCE_REFERENCE = "ResourceReference"
     # Ref intrinsic functions that get template parameter values
-    PARAMETER_REFERENCE = 'ParameterReference'
+    PARAMETER_REFERENCE = "ParameterReference"
     # Fn::GetAtt intrinsic functions that get resource attribute values
-    RESOURCE_ATTRIBUTE = 'ResourceAttribute'
+    RESOURCE_ATTRIBUTE = "ResourceAttribute"
     # Changes that are made directly to the template
-    DIRECT_MODIFICATION = 'DirectModification'
+    DIRECT_MODIFICATION = "DirectModification"
     # AWS::CloudFormation::Stack resource types (Changes always triggered)
-    AUTOMATIC = 'Automatic'
+    AUTOMATIC = "Automatic"
 
 
 class Evaluation(Enum):
     # CloudFormation can determine that the target value will change, and its value
-    STATIC = 'Static'
+    STATIC = "Static"
     # the target value depends on the result of an intrinsic function
-    DYNAMIC = 'Dynamic'
+    DYNAMIC = "Dynamic"
 
 
-def is_template_modification(change_source: ChangeSource, evaluation: Evaluation) -> bool:
-    return change_source == ChangeSource.DIRECT_MODIFICATION and evaluation == Evaluation.STATIC
+def is_template_modification(
+    change_source: ChangeSource, evaluation: Evaluation
+) -> bool:
+    return (
+        change_source == ChangeSource.DIRECT_MODIFICATION
+        and evaluation == Evaluation.STATIC
+    )
 
 
-def modification_can_be_hidden(change_source: ChangeSource, evaluation: Evaluation) -> bool:
-    return change_source == ChangeSource.DIRECT_MODIFICATION and evaluation == Evaluation.DYNAMIC
+def modification_can_be_hidden(
+    change_source: ChangeSource, evaluation: Evaluation
+) -> bool:
+    return (
+        change_source == ChangeSource.DIRECT_MODIFICATION
+        and evaluation == Evaluation.DYNAMIC
+    )

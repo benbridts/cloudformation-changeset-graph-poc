@@ -10,5 +10,5 @@ class RollbackConfiguration(object):
     """
 
     def __init__(self, o: typing.Mapping):
-        self.monitoring_time_in_minutes = o['MonitoringTimeInMinutes']  # type: int
-        self.rollback_triggers = [RollbackTrigger(x) for x in o['RollbackTriggers']]
+        self.monitoring_time_in_minutes = o["MonitoringTimeInMinutes"]  # type: int
+        self.rollback_triggers = [RollbackTrigger(x) for x in o["RollbackTriggers"]]
