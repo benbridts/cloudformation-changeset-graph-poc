@@ -1,7 +1,7 @@
 import typing
 from enum import Enum
 
-from graphviz.dot import Dot
+from graphviz.dot import Dot  # type: ignore
 
 from utils import label_table
 
@@ -17,7 +17,7 @@ class ResourceTargetDefinition(object):
         # Indicates which resource attribute is triggering this update
         self.attribute = Attribute(o["Attribute"])
         # If the Attribute value is Properties, the name of the property. For all other attributes, the value is null.
-        self.name = o.get("Name")  # type: str
+        self.name = o.get("Name")  # type: typing.Optional[str]
         #  the Attribute value is Properties, indicates whether a change to this property causes the resource to be recreated
         self.requires_recreation = RequiresRecreation(o["RequiresRecreation"])
 
@@ -27,15 +27,13 @@ class ResourceTargetDefinition(object):
     @property
     def node_name(self) -> str:
         # We only have a name when the attribute value is properties
-        return (
-            self.name
-            if self.attribute == Attribute.PROPERTIES
-            else self.attribute.value
-        )
+        return self.name if self.name else self.attribute.value
 
     @property
     def node_id(self) -> str:
-        return "-".join([self.resource_id, self.node_name])
+        if self.resource_id:
+            return "-".join([self.resource_id, self.node_name])
+        return self.node_name
 
     def node_label(self) -> str:
         return label_table(

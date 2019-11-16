@@ -1,4 +1,4 @@
-from graphviz.dot import Dot
+from graphviz.dot import Dot  # type: ignore
 
 
 class Template(object):

@@ -1,7 +1,7 @@
 import typing
 from enum import Enum
 
-from graphviz.dot import Dot, Digraph
+from graphviz.dot import Dot, Digraph  # type: ignore
 from cloudformation.resource_change_detail import ResourceChangeDetail
 from utils import label_table
 

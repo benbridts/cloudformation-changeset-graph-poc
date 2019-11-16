@@ -2,12 +2,13 @@ import typing
 from datetime import datetime
 from enum import Enum
 
-from graphviz.dot import Dot
+from graphviz.dot import Dot  # type: ignore
 
 from cloudformation.change import Change
 from cloudformation.parameter import Parameter
 from cloudformation.resource_change_detail import ChangeSource
 from cloudformation.rollback_configuration import RollbackConfiguration
+from cloudformation.tag import Tag
 
 
 class DescribeChangeSetResponse(object):

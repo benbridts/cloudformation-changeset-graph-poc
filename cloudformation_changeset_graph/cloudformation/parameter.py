@@ -1,6 +1,6 @@
 import typing
 
-from graphviz.dot import Dot
+from graphviz.dot import Dot  # type: ignore
 
 from utils import label_table
 

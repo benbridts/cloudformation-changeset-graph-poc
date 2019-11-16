@@ -1,7 +1,7 @@
 import typing
 from enum import Enum
 
-from graphviz.dot import Dot
+from graphviz.dot import Dot  # type: ignore
 
 from cloudformation import Template
 from cloudformation.resource_target_definition import ResourceTargetDefinition
@@ -36,8 +36,10 @@ class ResourceChangeDetail(object):
             template_cause = Template(self.resource_id)
             template_cause.render(dot)
             causing_entity = template_cause.node_id
-        else:
+        elif self.causing_entity:
             causing_entity = self.causing_entity
+        else:
+            raise Exception("Could not determine cause of change detail")
 
         dot.edge(causing_entity, self.target.node_id)
 

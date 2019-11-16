@@ -1,7 +1,7 @@
 import typing
 from enum import Enum
 
-from graphviz.dot import Dot
+from graphviz.dot import Dot  # type: ignore
 
 from cloudformation.resource_change import ResourceChange
 

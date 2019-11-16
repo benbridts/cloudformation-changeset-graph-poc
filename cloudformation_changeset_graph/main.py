@@ -1,4 +1,4 @@
-from cloudformation_changeset_graph.render import render_example
+from render import render_example
 
 if __name__ == "__main__":
     render_example("directly_editing_a_template")
